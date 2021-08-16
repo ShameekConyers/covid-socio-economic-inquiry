@@ -67,13 +67,31 @@ levels and urbanization may have an impact. This inuition is reinforced by
 poverty and urbanization having a negative correlation on each other
 yet both having a positive correlation on unmet mental health.
 
-### Fig 4: Colinearity testing
+__
 
-[In progress]
+### Fig 4: Mono Multi-Linear Model
 
-### Fig 5: Multi-Linear Model
+<img src="./figures/model0.png"
+alt="" width="600" height="400" />
 
-[In progress]
+Even though the model has statistically significant p-values, given the matrix
+is ill conditioned due to urb_2010 varible we will decompose the linear model.
+
+__
+
+### Fig 5: Decomposed Multi-Linear Model
+
+<img src="./figures/model1.png"
+alt="" width="600" height="400" />
+<img src="./figures/model2.png"
+alt="" width="600" height="400" />
+
+Looking at the p-values we see that none of our explanatory variables have a
+statistically significant result at the 5% level, and hence we cannot claim that
+the gini coef, poverty rate, or  urbanization has a casual impact on unmet
+mental health needs. However, given that the mono model does have statistically
+significant results and urbanization is significant at the 10% level it does
+warrant further investigation.
 
 ### Sources
 

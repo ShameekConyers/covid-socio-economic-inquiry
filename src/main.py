@@ -9,6 +9,7 @@ import numpy as np
 import pathlib
 import statsmodels.api as sm
 import numpy as np
+import matplotlib.pyplot as plt
 pd.options.plotting.backend = "plotly"
 
 
@@ -283,14 +284,76 @@ def main():
 	)
 	fig.write_image("./figures/corrs.png")
 
-	#Now we use a simple multilinear regression on the data.
+	# We do tests of multicolinearity (if we need to )
+
+	#Now we use a simple multilinear regression on the data, only to test for
+	# statistical significance
 	dep_vars = end[['gini_coef']]
-	# dep_vars['urb_2010'] = end['urb_2010'].str.rstrip('%').astype('float')
+	dep_vars['urb_2010'] = end['urb_2010'].str.rstrip('%').astype('float')
 	dep_vars['pov_2019'] = end['pov_2019'].str.rstrip('%').astype('float')
 	y_var = end['unmet_mental_health']
 	dep_vars = sm.add_constant(dep_vars)
 	est = sm.OLS(y_var.astype(float), dep_vars.astype(float), missing='drop').fit()
-	print(est.summary())
+
+	plt.rc(
+		'figure',
+		figsize=(12, 7))
+	plt.text(
+		0.01,
+		0.05,
+		str(est.summary()),
+		{'fontsize': 10},
+		fontproperties = 'monospace')
+	plt.axis('off')
+	plt.tight_layout()
+	plt.savefig('./figures/model0.png')
+
+	dep_vars = end['urb_2010'].str.rstrip('%').astype('float')
+	y_var = end['unmet_mental_health']
+	dep_vars = sm.add_constant(dep_vars)
+	est = sm.OLS(y_var.astype(float), dep_vars.astype(float), missing='drop').fit()
+
+	plt.clf()
+	dep_vars = end[['gini_coef']]
+	dep_vars['pov_2019'] = end['pov_2019'].str.rstrip('%').astype('float')
+	y_var = end['unmet_mental_health']
+	dep_vars = sm.add_constant(dep_vars)
+	est = sm.OLS(y_var.astype(float), dep_vars.astype(float), missing='drop').fit()
+
+	plt.rc(
+		'figure',
+		figsize=(12, 7))
+	plt.text(
+		0.01,
+		0.05,
+		str(est.summary()),
+		{'fontsize': 10},
+		fontproperties = 'monospace')
+	plt.axis('off')
+	plt.tight_layout()
+	plt.savefig('./figures/model1.png')
+
+	dep_vars = end['urb_2010'].str.rstrip('%').astype('float')
+	y_var = end['unmet_mental_health']
+	dep_vars = sm.add_constant(dep_vars)
+	est = sm.OLS(y_var.astype(float), dep_vars.astype(float), missing='drop').fit()
+
+	plt.clf()
+	plt.rc(
+		'figure',
+		figsize=(12, 7))
+	plt.text(
+		0.01,
+		0.05,
+		str(est.summary()),
+		{'fontsize': 10},
+		fontproperties = 'monospace')
+	plt.axis('off')
+	plt.tight_layout()
+	plt.savefig('./figures/model2.png')
+
+
+
 
 
 
